@@ -19,8 +19,8 @@ def get_color_range(color):
     # Complete only for the color you want to detect 
 
     #if(color == 'red'):
-    #    lower_range = # <COMPLETE>
-    #    upper_range = # <COMPLETE>
+        # lower_range = np.array([0, 150, 20])
+        # upper_range = np.array([10, 255, 255])
  
     #elif(color == 'green'):
     #    lower_range = # <COMPLETE>
@@ -42,7 +42,7 @@ def get_color_range(color):
 def detect_color(img, lower_range, upper_range):
 
     # Perform a Gaussian filter 
-    # <COMPLETE>
+    # cv.GaussianBlur(img,(5,5),0)
 
     # Convert gauss image to HSV
     # <COMPLETE>
@@ -63,9 +63,9 @@ def detect_color(img, lower_range, upper_range):
 # Get maximum contour, area and its center 
 def get_max_contour(mask): 
 
-    contour_max = []
-    area_max = 0
-    center = (-1,-1)
+    # contour_max = []
+    # area_max = 0
+    # center = (-1,-1)
 
     
     # Find contours

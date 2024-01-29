@@ -26,7 +26,7 @@ from velocity import get_velocity
 # Variables 
 ########################################################################
 bridge = CvBridge()
-min_detection = # <COMPLETE> 
+# min_detection = # <COMPLETE> 
 
 
 
@@ -40,16 +40,18 @@ def image_callback(msg):
     ##########################################
 
     # Convert your ros image message to opencv using bridge
-    # <COMPLETE> 
+    img = bridge.imgmsg_to_cv2(msg,"bgr8")
 
     # Show image using show_image function
-    # <COMPLETE> 
+    show_image(img,"window !")
 
     # Get half width of the image 
-    # <COMPLETE> 
+    # img.shape
+    # mid_width = w / 2
 
     # Create velocity publisher and variable of velocity
-    # <COMPLETE> 
+    # pub = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
+    # vel = Twist
 
     
     # Do color detection 
@@ -66,15 +68,15 @@ def image_callback(msg):
 
     # Find contours and get max area using get_max_contours from color_image.py 
     # <COMPLETE>
-    print("Maximum area: ", area)
+    # print("Maximum area: ", area)
 
 
     # Get robot speed     
     ##########################################
 
     # If the area of the detected color is big enough
-    if():
-        print("Cylinder detected")
+    # if():
+        # print("Cylinder detected")
 
         # Draw contour and center of the detection and show image 
         # <COMPLETE>
@@ -84,13 +86,13 @@ def image_callback(msg):
 
             
     # If the area of the detected color is not big enough, the robot spins 
-    else:
-        print("Looking for color: spinning")
+    # else:
+        # print("Looking for color: spinning")
         # <COMPLETE>
         
 
     # Publish velocity
-    # <COMPLETE> 
+    # pub.publish(vel)
 
 
 
@@ -99,13 +101,13 @@ def image_callback(msg):
 ################################################################
 def main():
     # Init node 'color_detection'
-    # <COMPLETE>
+    rospy.init_node("color_detection")
 
     # Suscribe to image topic and add callback + spin
-    # <COMPLETE>
-    
+    rospy.Subscriber("/camera/rgb/image_raw",Image, image_callback)
+    rospy.spin()
     cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
-    main()
+    main()    
