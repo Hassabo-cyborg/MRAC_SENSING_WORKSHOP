@@ -44,7 +44,7 @@
           <geometry>
             <cylinder>
               <radius>0.12</radius>
-              <length>0.55</length>
+              <length>0.25</length>
             </cylinder>
           </geometry>
         </collision>
@@ -53,13 +53,13 @@
           <geometry>
             <cylinder>
               <radius>0.15</radius>
-              <length>0.6</length>
+              <length>0.3</length>
             </cylinder>
           </geometry>
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Purple</name>
+              <name>Gazebo/Red</name>
             </script>
           </material>
         </visual>
@@ -153,6 +153,32 @@
       </link>
     </model>        
 
+    <model name="obstacle_5">
+      <pose>0.5 0.5 0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Purple</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>        
       
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
