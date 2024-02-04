@@ -26,7 +26,7 @@ from velocity import get_velocity
 # Variables 
 ########################################################################
 bridge = CvBridge()
-min_detection = 500  # <COMPLETE: Set the minimum area for color detection>
+min_detection = 5000  # <COMPLETE: Set the minimum area for color detection>
 
 
 # Image callback -> it is called when the topic receives information
@@ -60,8 +60,7 @@ def image_callback(msg):
     # Get color mask using detect_color from color_image.py
     lower_range, upper_range = color_range
     color_mask = detect_color(img, lower_range, upper_range)
-                                                            # <COMPLETE: Call detect_color function>
-
+                                                           
     # Show mask 
     show_image(color_mask, "Color Mask")
 
@@ -84,19 +83,23 @@ def image_callback(msg):
             cX = int(M["m10"] / M["m00"])
             cY = int(M["m01"] / M["m00"])
             cv2.circle(img, (cX, cY), 7, (255, 255, 255), -1)
-            cv2.putText(img, f"Center: ({cX}, {cY})", (cX - 20, cY - 20),
+            cv2.putText(img, f"Center of detected area: ({cX}, {cY})", (cX - 20, cY - 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
             # Show the image with contour and center
             show_image(img, "Detected Color !")
 
             # Gets the color speed and direction depending on the color detection using get_velocity from velocity.py
+            
+
             vel = get_velocity(mid_width, cX, area_max)  # <COMPLETE: Call get_velocity function>
+
+
 
     # If the area of the detected color is not big enough, the robot spins 
     else:
         print("Looking for color: spinning")
-        vel.angular.z = 0.2  # <COMPLETE: Set the angular velocity for spinning>
+        vel.angular.z = 0.3  # <COMPLETE: Set the angular velocity for spinning>
 
     # Publish velocity
     pub.publish(vel)

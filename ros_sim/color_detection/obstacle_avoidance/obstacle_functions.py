@@ -13,35 +13,28 @@ def get_all_section_values(msg):
     all_sides = []
     all_sides_mean = []
     
-    # The first section is the center, we save the laser scan values from -15º to 15º 
+    # Read center laser scan data 
     side = np.array([msg.ranges[-15:], msg.ranges[:15]]).flatten()
-	
-    # Delete the nan values and inf values from side 
-    side = # <COMPLETE>
+    side = side[~np.isnan(side) & ~np.isinf(side)]
+    all_sides.append(side)
+    all_sides_mean.append(np.mean(side))
+   
 	
     # We add the center section values and the mean
     all_sides.append(side)
     all_sides_mean.append(np.mean(side))
    
-    # Add laser scan data every 30 degrees starting from 15º (the last iteration will be at 345º)
-    # <COMPLETE>
-	
-		# Get actual laser scan values (from actual plus 30 values)
-    	side = # <COMPLETE>
-		
-        # Delete the nan values and inf values from side 
-    	# <COMPLETE>
-		
-        # Save side in all_sides
-		# <COMPLETE>
-
-    	# Save mean side values in all_sides_mean
-		# <COMPLETE>
+   
+    # Add laser scan data every 30 degrees 
+    for d in range(15,345,30):
+        side = np.array(msg.ranges[d:d+30])
+        side = side[~np.isnan(side) & ~np.isinf(side)]
+        all_sides.append(side)
+        all_sides_mean.append(np.mean(side))
     
     print("\n",all_sides_mean)
 
     return all_sides, all_sides_mean
-
 
 
 # Gets the robot velocity based on the clearest paths 
@@ -58,38 +51,37 @@ def get_all_section_values(msg):
 def get_velocity(all_sides_mean, three_clearest_paths, turning_left, vel): 
 	
     # Get the index of the clearest path 
-    clearest_path = # <COMPLETE>
+    clearest_path = np.argmax(all_sides_mean)
     print(clearest_path)
 
-    # If one of the FRONT orientations means is less than 1.0 
-    # <COMPLETE>
-    	
-    	# We want hopefully that the three front directions are contained in the three_clearest_paths 
-		# If one of them is not contained in the three_clearest_paths
-        # <COMPLETE>
-    	
+    # If the mean value of the front section is less than 1.0
+    if(all_sides_mean[0] < 1.0 or all_sides_mean[1] < 1.0 or all_sides_mean[-1] < 1.0):
+        # Check if any of the three front sections is not in the three_clearest_paths
+        if(0 not in three_clearest_paths or 1 not in three_clearest_paths or 11 not in three_clearest_paths):
             # If the clearest_path is between 1-5 indexes (included) or we are already turning left --> Turn left
-    	    # <COMPLETE>
-    	       print("Turn left")
-               # <COMPLETE>   # Update turning_left to True
-               # <COMPLETE>   # Turn to left
-			   
-			# If the clearest_path is 0 or >5 or we are not turning to left --> Turn right  
-    	    else: 
-    	       print("Turn right")
-               # <COMPLETE>   # Update turning_left to False
-               # <COMPLETE>   # Turn to right
-    	else:
-    	   # Go straight to avoid being trapped spinning 
-    	   print("Go straight 1")
-           # <COMPLETE>   # Update turning_left to False
-           # <COMPLETE>   # Go straight
-    	
+            if(clearest_path > 0 and clearest_path < 6 or turning_left):
+                print("Turn left")
+                #vel.linear.x = 0.0
+                vel.angular.z = 0.3  # Update turning_left to True
+                turning_left = True  # Turn to left
+            # If the clearest_path is 0 or >5 or we are not turning to left --> Turn right
+            else: 
+                print("Turn right")
+                #vel.linear.x = 0.0
+                vel.angular.z = -0.3  # Update turning_left to False
+                turning_left = False  # Turn to right
+        else:
+            # Go straight to avoid being trapped spinning 
+            print("Go straight 1")
+            vel.linear.x = 0.2
+            #vel.angular.z = 0.0  # Update turning_left to False
+            turning_left = False  # Go straight
     # If none of the front directions are less than 1.0 (clear path ahead) -> Go straight
     else:
         print("Go straight 2")
-        # <COMPLETE>   # Update turning_left to False
-        # <COMPLETE>   # Go straight
+        vel.linear.x = 0.3
+        #vel.angular.z = 0.0  # Update turning_left to False
+        turning_left = False  # Go straight
 
-		
+
     return vel, turning_left

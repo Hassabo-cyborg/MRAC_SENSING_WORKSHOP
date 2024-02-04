@@ -20,6 +20,9 @@ def get_color_range(color):
     # Complete only for the color you want to detect 
 
     if color == 'green':
+        # lower_range = np.array([0, 100, 100])  # Lower range for red in HSV
+        # upper_range = np.array([10, 255, 255]) 
+       
         lower_range = np.array([40, 40, 40])
         upper_range = np.array([80, 255, 255])
  
