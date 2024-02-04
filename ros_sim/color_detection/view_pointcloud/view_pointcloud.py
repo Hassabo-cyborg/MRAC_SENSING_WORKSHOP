@@ -10,5 +10,5 @@ Change your pointcloud path
 
 import open3d as o3d
 
-pcd = o3d.io.read_point_cloud('/home/esther/mymaps/cloud.ply') # CHANGE TO YOUR PATH!!
+pcd = o3d.io.read_point_cloud('/home/hassabo/dev_ws/src/MRAC_SENSING_WORKSHOP/ros_sim/view_pointcloud/cloud.ply') # CHANGE TO YOUR PATH!!
 o3d.visualization.draw_geometries([pcd])
