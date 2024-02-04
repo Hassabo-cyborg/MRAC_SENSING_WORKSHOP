@@ -30,7 +30,7 @@ def publisher():
     rate = rospy.Rate(10) # Rate to publish 10hz
 
     # Read pointcloud
-    pcd = o3d.io.read_point_cloud('/home/esther/mymaps/cloud.ply>') # CHANGE TO YOUR PATH!!
+    pcd = o3d.io.read_point_cloud('/home/hassabo/newmap_cloudpoint.ply') # CHANGE TO YOUR PATH!!
     
     # Gets the xyz points from the pointcloud  
     xyz_points = np.asarray(pcd.points)
