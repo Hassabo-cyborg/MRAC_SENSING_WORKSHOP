@@ -15,27 +15,29 @@ FUNCTIONS FOR LINE DETECTION CODE
 def get_velocity(vel, x, mid_width): 
 
     # Add an offset so the robot only turns when the center of the contour has deviated a specific distance to the right or left
-    offset = # <COMPLETE>
+    offset = 30
+
+    print(x)
+    print(mid_width)
 
     # If the color detected is on the right part of the image + an offset
-    # <COMPLETE>
+    if x > mid_width + offset:
         # Go straight and spin to the right 
         print("Go straight and spin to the right")
-        # <COMPLETE> 
-
+        vel.linear.x = 0.2
+        vel.angular.z = -0.5
 
     # If the color detected is on the left part of the image + an offset
-    # <COMPLETE>
+    elif x < mid_width - offset:
         # Go straight and spin to the left
         print("Go straight and spin to the left")
-        # <COMPLETE> 
-
+        vel.linear.x = 0.2
+        vel.angular.z = 0.5
 
     # Go straight 
     else:
         print("Go straight ")
-        # <COMPLETE>
+        vel.linear.x = 0.4
+        vel.angular.z = 0.0
 
-    
     return vel
-    
